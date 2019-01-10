@@ -1,0 +1,14 @@
+spring:
+    datasource:
+        url: jdbc:mysql://localhost:3306/smartlock?characterEncoding=utf8
+        username: root
+        password: Lang169818
+
+    jpa:
+        hibernate:
+            ddl-auto: update
+        generate-ddl: true
+        show-sql: true
+
+server:
+    port: 8080
