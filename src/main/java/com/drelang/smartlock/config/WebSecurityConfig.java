@@ -33,6 +33,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                     .antMatchers("/", "/home").permitAll()
                     .antMatchers("/sso/**").permitAll() // 登录注册要允许匿名访问
+                    .anyRequest().authenticated() //除上面的请求外，全部都需要认证
                     .and()
                 .formLogin()
                     .loginPage("/sso/login")
@@ -42,6 +43,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .logout()
                     .logoutUrl("/sso/logout")
                     .logoutSuccessHandler(new GoLogoutSuccessHandler())
+                    .invalidateHttpSession(true)
+                    .deleteCookies("JSESSIONIDhhh")
                     .and()
                 .csrf()
                     .disable(); // 关闭 csrf 功能，不然不能用 POST 方法
