@@ -1,4 +1,4 @@
-package com.drelang.smartlock.domain;
+package com.drelang.smartlock.bo;
 
 import com.drelang.smartlock.pojo.entity.UmsMember;
 import org.springframework.security.core.GrantedAuthority;
@@ -8,11 +8,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Arrays;
 import java.util.Collection;
 
-public class MemberDetails implements UserDetails {
+public class UmsMemberDetails implements UserDetails {
 
     private UmsMember umsMember;
 
-    public MemberDetails(UmsMember umsMember) {
+    public UmsMemberDetails(UmsMember umsMember) {
         this.umsMember = umsMember;
     }
 

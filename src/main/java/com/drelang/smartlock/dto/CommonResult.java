@@ -1,4 +1,4 @@
-package com.drelang.smartlock.domain;
+package com.drelang.smartlock.dto;
 
 import lombok.Data;
 

@@ -12,3 +12,9 @@ spring:
 
 server:
     port: 8080
+
+jwt:
+    tokenHeader: Authorization
+    secret: hahahahaha
+    expiration: 604800  #  7*24*60*60 s
+    tokenHead: Bearer
