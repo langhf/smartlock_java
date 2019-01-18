@@ -1,6 +1,7 @@
 package com.drelang.smartlock.bo;
 
-import com.drelang.smartlock.pojo.entity.UmsMember;
+import com.drelang.smartlock.domain.UmsMember;
+import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -8,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Arrays;
 import java.util.Collection;
 
+@Getter
 public class UmsMemberDetails implements UserDetails {
 
     private UmsMember umsMember;

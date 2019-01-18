@@ -2,7 +2,9 @@ package com.drelang.smartlock.config;
 
 import com.drelang.smartlock.bo.UmsMemberDetails;
 import com.drelang.smartlock.component.JwtAuthenticationTokenFilter;
-import com.drelang.smartlock.pojo.entity.UmsMember;
+import com.drelang.smartlock.component.RestAccessDeniedHandler;
+import com.drelang.smartlock.component.RestAuthenticationEntryPoint;
+import com.drelang.smartlock.domain.UmsMember;
 import com.drelang.smartlock.service.UmsMemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -10,6 +12,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -24,14 +27,21 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private UmsMemberService umsMemberService;
 
-//    @Autowired
-//    public WebSecurityConfig(UmsMemberService umsMemberService) {
-//        this.umsMemberService = umsMemberService;
-//    }
+    private RestAuthenticationEntryPoint restAuthenticationEntryPoint;
+    private RestAccessDeniedHandler restAccessDeniedHandler;
+
+    @Autowired
+    public WebSecurityConfig(RestAuthenticationEntryPoint restAuthenticationEntryPoint,
+                                                    RestAccessDeniedHandler restAccessDeniedHandler) {
+
+        this.restAuthenticationEntryPoint = restAuthenticationEntryPoint;
+        this.restAccessDeniedHandler = restAccessDeniedHandler;
+    }
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf()
@@ -40,8 +50,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .sessionCreationPolicy(SessionCreationPolicy.STATELESS)  // 基于 token, 所以不需要 session
                     .and()
                 .authorizeRequests()
-                        .antMatchers("/", "/home").permitAll()
+                        .antMatchers("/").permitAll()
                         .antMatchers("/sso/register", "/sso/login").permitAll() // 登录注册要允许匿名访问
+                        .antMatchers("/room/all").permitAll() // 允许所有用户获取可用房间信息
                         .antMatchers(HttpMethod.OPTIONS).permitAll()  // 跨域请求会先进行一次 options 请求
                         .anyRequest().authenticated() //除上面的请求外，全部都需要认证
                         ;
@@ -49,8 +60,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.headers().cacheControl();
         // 添加 JWT Filter, 在 UsernamePasswordAuthenticationFilter 之前添加
         http.addFilterBefore(jwtAuthenticationTokenFilter(), UsernamePasswordAuthenticationFilter.class);
-        // TODO: 添加自定义未登录和未授权返回结果
-
+        // 添加自定义未登录和未授权返回结果
+        http.exceptionHandling()
+                .authenticationEntryPoint(restAuthenticationEntryPoint)
+                .accessDeniedHandler(restAccessDeniedHandler);
     }
 
     @Override

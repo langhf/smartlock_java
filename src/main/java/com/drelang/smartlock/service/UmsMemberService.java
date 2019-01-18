@@ -2,7 +2,7 @@ package com.drelang.smartlock.service;
 
 import com.drelang.smartlock.dto.CommonResult;
 import com.drelang.smartlock.dto.UmsMemberRegisterParam;
-import com.drelang.smartlock.pojo.entity.UmsMember;
+import com.drelang.smartlock.domain.UmsMember;
 
 public interface UmsMemberService {
 
@@ -20,14 +20,12 @@ public interface UmsMemberService {
      */
     UmsMember getByUsername(String username);
 
-
     /**
      *  用户注册
      * @param umsMemberRegisterParam  DTO 层对象
      * @return POJO 对象
      */
     UmsMember register(UmsMemberRegisterParam umsMemberRegisterParam);
-
 
     /**
      *  用户登录
@@ -36,6 +34,7 @@ public interface UmsMemberService {
      * @return jwtToken
      */
     String login(String username, String password);
+
     /**
      *  生成验证码
      * @param telephone 手机号

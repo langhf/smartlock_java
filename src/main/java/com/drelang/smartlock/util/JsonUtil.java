@@ -47,7 +47,7 @@ public class JsonUtil {
     }
 
     /**
-     *  将 json 数据转换成 pojo 对象 list
+     *  将 json 数据转换成 domain 对象 list
      * @param jsonData
      * @param beanType
      * @param <T>

@@ -8,8 +8,15 @@ import lombok.Data;
  */
 @Data
 public class CommonResult {
+    // 操作成功
     public static final int SUCCESS = 200;
+    // 未认证
+    public static final int UNAUTHORIZED = 401;
+    // 未授权
+    public static final int FORBIDDEN = 403;
+    // 操作失败
     public static final int FAILED = 500;
+
     private int code;
     private String message;
     private Object data;
@@ -57,6 +64,30 @@ public class CommonResult {
     public CommonResult failed(String message) {
         this.code = FAILED;
         this.message = message;
+        return this;
+    }
+
+    /**
+     *  未授权返回消息
+     * @param message  提示消息
+     * @return CommonResult
+     */
+    public CommonResult unauthorized(String message) {
+        this.code = UNAUTHORIZED;
+        this.message = "暂未登录或token已过期";
+        this.data = message;
+        return this;
+    }
+
+    /**
+     *  未授权返回信息
+     * @param message 提示消息
+     * @return CommonResult
+     */
+    public CommonResult forbidden(String message) {
+        this.code = FORBIDDEN;
+        this.message = "没有相关权限";
+        this.data = message;
         return this;
     }
 }

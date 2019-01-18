@@ -1,0 +1,23 @@
+package com.drelang.smartlock.component;
+
+import com.drelang.smartlock.dto.CommonResult;
+import com.drelang.smartlock.util.JsonUtil;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.stereotype.Component;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+
+@Component
+public class RestAuthenticationEntryPoint implements AuthenticationEntryPoint {
+    @Override
+    public void commence(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException, ServletException {
+        httpServletResponse.setCharacterEncoding("UTF-8");
+        httpServletResponse.setContentType("application/json");
+        httpServletResponse.getWriter().print(JsonUtil.objectToJson(new CommonResult().unauthorized(e.getMessage())));
+        httpServletResponse.getWriter().flush();
+    }
+}
