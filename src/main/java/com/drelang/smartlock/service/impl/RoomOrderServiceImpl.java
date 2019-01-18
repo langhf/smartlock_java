@@ -104,7 +104,7 @@ public class RoomOrderServiceImpl implements RoomOrderService {
 
     /**
      * 根据 RoomOrder 返回 RoomOrderResult
-     * @return
+     * @return RoomOrderResult
      */
     private RoomOrderResult RoomOrderToRoomOrderResult(RoomOrder roomOrder) {
         RoomOrderResult roomOrderResult = new RoomOrderResult();

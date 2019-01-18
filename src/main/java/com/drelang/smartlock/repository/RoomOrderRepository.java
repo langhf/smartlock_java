@@ -24,4 +24,13 @@ public interface RoomOrderRepository extends JpaRepository<RoomOrder, Long> {
      * @return List<RoomOrder>
      */
     List<RoomOrder> getAllByAuditorId(Long auditorId);
+
+    /**
+     * 根据用户id，房间id和状态查找用户最新的订单
+     * @param userId 用户id
+     * @param roomId 房间id
+     * @param status 状态
+     * @return RoomOrder
+     */
+    RoomOrder findFirstByUserIdAndRoomIdAndStatusOrderByIdDesc(Long userId, Long roomId, Integer status);
 }

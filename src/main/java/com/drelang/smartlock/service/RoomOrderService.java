@@ -6,6 +6,10 @@ import com.drelang.smartlock.dto.RoomOrderResult;
 
 import java.util.List;
 
+/**
+  *  管理房间订单服务
+  * Created by Drelang on 2019/01/18
+  */
 public interface RoomOrderService {
 
     /**
