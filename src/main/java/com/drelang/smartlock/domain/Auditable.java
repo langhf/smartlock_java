@@ -13,6 +13,10 @@ import javax.persistence.EntityListeners;
 import javax.persistence.MappedSuperclass;
 import java.util.Date;
 
+/**
+  *  Jpa 审计超类
+  * Created by Drelang on 2019/01/19
+  */
 @Getter
 @Setter
 @MappedSuperclass

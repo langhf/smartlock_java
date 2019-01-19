@@ -20,3 +20,7 @@ jwt:
     secret: hahahahaha
     expiration: 604800  #  7*24*60*60 s
     tokenHead: Bearer
+
+# swagger 开关 true or false
+swagger:
+    enable: true

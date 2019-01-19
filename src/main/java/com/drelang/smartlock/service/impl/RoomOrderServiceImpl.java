@@ -1,15 +1,15 @@
 package com.drelang.smartlock.service.impl;
 
-import com.drelang.smartlock.bo.UmsMemberDetails;
+import com.drelang.smartlock.bo.MemberDetails;
+import com.drelang.smartlock.domain.Member;
 import com.drelang.smartlock.domain.RoomInfo;
 import com.drelang.smartlock.domain.RoomOrder;
-import com.drelang.smartlock.domain.UmsMember;
 import com.drelang.smartlock.dto.CommonResult;
 import com.drelang.smartlock.dto.RoomOrderBookParam;
 import com.drelang.smartlock.dto.RoomOrderResult;
 import com.drelang.smartlock.repository.RoomInfoRepository;
 import com.drelang.smartlock.repository.RoomOrderRepository;
-import com.drelang.smartlock.repository.UmsMemberRepository;
+import com.drelang.smartlock.repository.MemberRepository;
 import com.drelang.smartlock.service.RoomOrderService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.security.core.Authentication;
@@ -24,12 +24,12 @@ import java.util.List;
 public class RoomOrderServiceImpl implements RoomOrderService {
     private RoomOrderRepository roomOrderRepository;
     private RoomInfoRepository roomInfoRepository;
-    private UmsMemberRepository umsMemberRepository;
+    private MemberRepository memberRepository;
 
-    public RoomOrderServiceImpl(RoomOrderRepository roomOrderRepository, RoomInfoRepository roomInfoRepository, UmsMemberRepository umsMemberRepository) {
+    public RoomOrderServiceImpl(RoomOrderRepository roomOrderRepository, RoomInfoRepository roomInfoRepository, MemberRepository memberRepository) {
         this.roomOrderRepository = roomOrderRepository;
         this.roomInfoRepository = roomInfoRepository;
-        this.umsMemberRepository = umsMemberRepository;
+        this.memberRepository = memberRepository;
     }
 
     @Override
@@ -94,11 +94,11 @@ public class RoomOrderServiceImpl implements RoomOrderService {
         return new CommonResult().success(null);
     }
 
-    private UmsMember getCurrentUser() {
+    private Member getCurrentUser() {
         SecurityContext securityContext = SecurityContextHolder.getContext();
         Authentication authentication = securityContext.getAuthentication();
-        UmsMemberDetails umsMemberDetails = (UmsMemberDetails) authentication.getPrincipal();
-        UmsMember currentUser = umsMemberDetails.getUmsMember();
+        MemberDetails umsMemberDetails = (MemberDetails) authentication.getPrincipal();
+        Member currentUser = umsMemberDetails.getMember();
         return currentUser;
     }
 
@@ -110,8 +110,8 @@ public class RoomOrderServiceImpl implements RoomOrderService {
         RoomOrderResult roomOrderResult = new RoomOrderResult();
         BeanUtils.copyProperties(roomOrder, roomOrderResult);
         // 将用户id和管理员id转换为姓名以及添加房间信息
-        UmsMember user = umsMemberRepository.getOne(roomOrder.getUserId());
-        UmsMember auditor = umsMemberRepository.getOne(roomOrder.getAuditorId());
+        Member user = memberRepository.getOne(roomOrder.getUserId());
+        Member auditor = memberRepository.getOne(roomOrder.getAuditorId());
         RoomInfo roomInfo = roomInfoRepository.getOne(roomOrder.getRoomId());
         roomOrderResult.setUsername(user.getUsername());
         roomOrderResult.setAuditorName(auditor.getUsername());

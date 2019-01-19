@@ -29,14 +29,14 @@ public interface RoomOrderService {
 
     /**
      * 获取当前登录用户的所有订单信息
-     * @return List<RoomOrder>
+     * @return List<RoomOrderResult>
      */
     List<RoomOrderResult> getCurrentUserOrders();
 
     /**
      * 根据审核员的id来获取该审核员管辖范围内的所有用户申请
      * @param auditorId 审核员id
-     * @return List<RoomOrder>
+     * @return List<RoomOrderResult>
      */
     List<RoomOrderResult> getAllOrdersByAuditorId(Long auditorId);
 

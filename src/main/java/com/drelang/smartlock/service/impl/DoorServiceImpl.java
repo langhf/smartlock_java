@@ -21,20 +21,20 @@ public class DoorServiceImpl implements DoorService {
     private DoorHelpOrderRepository doorHelpOrderRepository;
     private RoomOrderRepository roomOrderRepository;
     private RoomInfoRepository roomInfoRepository;
-    private UmsMemberRepository umsMemberRepository;
+    private MemberRepository memberRepository;
 
     public DoorServiceImpl(DoorInfoRepository doorInfoRepository,
-                                                DoorOpenLogRepository doorOpenLogRepository,
-                                                DoorHelpOrderRepository doorHelpOrderRepository,
-                                                RoomOrderRepository roomOrderRepository,
-                                                RoomInfoRepository roomInfoRepository,
-                                                UmsMemberRepository umsMemberRepository) {
+                           DoorOpenLogRepository doorOpenLogRepository,
+                           DoorHelpOrderRepository doorHelpOrderRepository,
+                           RoomOrderRepository roomOrderRepository,
+                           RoomInfoRepository roomInfoRepository,
+                           MemberRepository memberRepository) {
         this.doorInfoRepository = doorInfoRepository;
         this.doorOpenLogRepository = doorOpenLogRepository;
         this.doorHelpOrderRepository = doorHelpOrderRepository;
         this.roomOrderRepository = roomOrderRepository;
         this.roomInfoRepository = roomInfoRepository;
-        this.umsMemberRepository = umsMemberRepository;
+        this.memberRepository = memberRepository;
     }
 
     @Override
@@ -46,7 +46,7 @@ public class DoorServiceImpl implements DoorService {
         // 根据房间序列号来获取房间信息
         RoomInfo roominfo = roomInfoRepository.findBySerialNumber(roomSerialNumber);
         // 获取当前登录用户的信息
-        UmsMember currentUser = umsMemberRepository.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
+        Member currentUser = memberRepository.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
         // 根据用户id，房间id和订单状态来获取订单。
         RoomOrder roomOrder = roomOrderRepository.findFirstByUserIdAndRoomIdAndStatusOrderByIdDesc(currentUser.getId(), roominfo.getId(), RoomOrder.STATUS_ACCEPTED);
 

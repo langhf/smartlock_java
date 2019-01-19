@@ -1,5 +1,6 @@
 package com.drelang.smartlock.dto;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,15 +14,11 @@ import javax.validation.constraints.NotNull;
 @Setter
 public class RoomOrderReviewParam {
 
-    /**
-     * 订单 id
-     */
+    @ApiModelProperty(value = "订单号", example = "8", required = true)
     @NotNull(message = "订单号不能为空")
     private Long orderId;
 
-    /**
-     * 消息， 0代表拒绝，1代表同意
-     */
+    @ApiModelProperty(value = "消息", example = "1", required = true)
     @NotNull(message = "消息不能为空")
     private Integer message;
 }

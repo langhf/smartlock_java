@@ -8,6 +8,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.util.Optional;
 
+/**
+  *  Jpa 审计功能的配置
+  * Created by Drelang on 2019/01/19
+  */
 @Configuration
 @EnableJpaAuditing(auditorAwareRef = "auditorProvider")
 public class JpaAuditingConfiguration {

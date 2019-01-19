@@ -1,5 +1,6 @@
 package com.drelang.smartlock.dto;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 /**
@@ -17,8 +18,11 @@ public class CommonResult {
     // 操作失败
     public static final int FAILED = 500;
 
+    @ApiModelProperty(value = "http 状态码", example = "200")
     private int code;
+    @ApiModelProperty(value = "提示消息", example = "操作成功")
     private String message;
+    @ApiModelProperty(value = "返回的数据, Object 类型")
     private Object data;
 
     /**
