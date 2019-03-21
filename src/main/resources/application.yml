@@ -1,8 +1,8 @@
 spring:
     datasource:
-        url: jdbc:mysql://localhost:3306/smartlock?characterEncoding=utf8&serverTimezone=GMT%2b8
-        username: root
-        password: Lang169818
+        url: jdbc:mysql://192.168.8.158:3306/smartlock?characterEncoding=utf8&serverTimezone=GMT%2b8
+        username: smartlock
+        password: "[this,is,password]"
     jpa:
         hibernate:
             ddl-auto: update

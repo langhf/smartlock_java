@@ -49,6 +49,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .sessionManagement()
                     .sessionCreationPolicy(SessionCreationPolicy.STATELESS)  // 基于 token, 所以不需要 session
                     .and()
+                .cors().and()
                 .authorizeRequests()
                         .antMatchers(HttpMethod.GET,    // 允许对网站静态资源无授权访问
                                 "/",

@@ -1,15 +1,17 @@
 package com.drelang.smartlock.service.impl;
 
 import com.drelang.smartlock.bo.MemberDetails;
+import com.drelang.smartlock.domain.DoorInfo;
 import com.drelang.smartlock.domain.Member;
 import com.drelang.smartlock.domain.RoomInfo;
 import com.drelang.smartlock.domain.RoomOrder;
 import com.drelang.smartlock.dto.CommonResult;
 import com.drelang.smartlock.dto.RoomOrderBookParam;
 import com.drelang.smartlock.dto.RoomOrderResult;
+import com.drelang.smartlock.repository.DoorInfoRepository;
+import com.drelang.smartlock.repository.MemberRepository;
 import com.drelang.smartlock.repository.RoomInfoRepository;
 import com.drelang.smartlock.repository.RoomOrderRepository;
-import com.drelang.smartlock.repository.MemberRepository;
 import com.drelang.smartlock.service.RoomOrderService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.security.core.Authentication;
@@ -25,11 +27,16 @@ public class RoomOrderServiceImpl implements RoomOrderService {
     private RoomOrderRepository roomOrderRepository;
     private RoomInfoRepository roomInfoRepository;
     private MemberRepository memberRepository;
+    private DoorInfoRepository doorInfoRepository;
 
-    public RoomOrderServiceImpl(RoomOrderRepository roomOrderRepository, RoomInfoRepository roomInfoRepository, MemberRepository memberRepository) {
+    public RoomOrderServiceImpl(RoomOrderRepository roomOrderRepository,
+                                                            RoomInfoRepository roomInfoRepository,
+                                                            MemberRepository memberRepository,
+                                                            DoorInfoRepository doorInfoRepository) {
         this.roomOrderRepository = roomOrderRepository;
         this.roomInfoRepository = roomInfoRepository;
         this.memberRepository = memberRepository;
+        this.doorInfoRepository = doorInfoRepository;
     }
 
     @Override
@@ -70,7 +77,15 @@ public class RoomOrderServiceImpl implements RoomOrderService {
         List<RoomOrderResult> roomOrderResults = new ArrayList<>();
         for(RoomOrder roomOrder : roomOrders) {
             RoomOrderResult roomOrderResult = RoomOrderToRoomOrderResult(roomOrder);
-            roomOrderResults.add(roomOrderResult);
+            RoomInfo roomInfo = roomInfoRepository.getOne(roomOrder.getRoomId());
+            // TODO: 增加门信息
+            List<DoorInfo> doorInfos = doorInfoRepository.getAllBySerialNumberLike(roomInfo.getSerialNumber());
+            // 根据房间id对应的序列号去查找房间拥有的门
+//            Map<String, String> door = new HashMap<>();
+//            door.put("doorSerialNumber", roomInfo.getSerialNumber());
+//            door.put("doorDescription", roomInfo.getDescription());
+//            door.put("doorMAC", roomInfo.get)
+//            roomOrderResults.add(roomOrderResult);
         }
         return roomOrderResults;
     }

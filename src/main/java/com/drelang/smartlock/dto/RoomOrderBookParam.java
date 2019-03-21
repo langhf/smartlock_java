@@ -18,7 +18,6 @@ public class RoomOrderBookParam {
     @ApiModelProperty(value = "房间的序列号", example = "Q-408", required = true, position = 0)
     private String serialNumber;
 
-    // TODO: 无法添加数字 example
     @NotEmpty(message = "起始时间不能为空")
     @ApiModelProperty(value = "预定的起始时间", example = "2019-1-12 14:00:00", dataType = "number", required = true, position = 1)
     private Date startTime;

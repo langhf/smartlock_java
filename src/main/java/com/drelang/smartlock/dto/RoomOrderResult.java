@@ -4,6 +4,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.Map;
 
 /**
   *  返回房间订单信息，不只是 room_order 表的字段
@@ -48,4 +49,12 @@ public class RoomOrderResult {
     private Date updatedAt;
 
     // TODO: 增加门对应的MAC地址等
+    private Map door;
+
+//    @AllArgsConstructor
+//    class Door {
+//        String doorSerialNumber;
+//        String doorDescription;
+//        String doorMAC;
+//    }
 }
